@@ -78,6 +78,11 @@ export default defineComponent({
     selectedUserPlaylist: function () {
       if (this.playlistId == null || this.playlistId === '') { return null }
 
+      const searchFilteredPlaylist = this.$store.getters.getSearchFilteredVirtualPlaylist(this.playlistId)
+      if (this.isPlaylistFiltered) {
+        return searchFilteredPlaylist
+      }
+
       return this.$store.getters.getPlaylist(this.playlistId)
     },
     selectedUserPlaylistVideoCount () {
@@ -141,6 +146,9 @@ export default defineComponent({
     },
     sortOrder: function () {
       return this.isUserPlaylist ? this.userPlaylistSortOrder : SORT_BY_VALUES.Custom
+    },
+    isPlaylistFiltered() {
+      return this.$store.getters.getSearchFilteredVirtualPlaylistId === this.$props.playlistId
     },
   },
   watch: {
@@ -383,6 +391,10 @@ export default defineComponent({
           }
         )
       }
+    },
+
+    clearSearchGrouping: function () {
+      this.$store.commit('clearSearchFilteredVirtualPlaylist')
     },
 
     loadCachedPlaylistInformation: async function (cachedPlaylist) {

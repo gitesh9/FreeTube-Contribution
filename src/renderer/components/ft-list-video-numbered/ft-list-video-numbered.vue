@@ -17,11 +17,20 @@
           class="videoIndexIcon"
           :icon="['fas', 'play']"
         />
-        <template
+        <span
           v-else
+          class="index"
         >
           {{ videoIndex + 1 }}
-        </template>
+        </span>
+        <font-awesome-icon
+          v-if="isPlaylistFiltered"
+          tabindex="0"
+          role="img"
+          class="videoIndexIcon"
+          :title="$t('Video.Playlist Search result')"
+          :icon="['fas', 'magnifying-glass']"
+        />
       </p>
       <ft-list-video
         :data="data"

@@ -83,6 +83,11 @@ export default defineComponent({
       stopWatchingInitialVisibleState: null
     }
   },
+  computed: {
+    isPlaylistFiltered() {
+      return this.$store.getters.getSearchFilteredVirtualPlaylistId === this.$props.playlistId
+    }
+  },
   created() {
     if (!this.initialVisibleState) {
       this.stopWatchingInitialVisibleState = this.$watch('initialVisibleState', (newValue) => {

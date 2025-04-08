@@ -105,6 +105,17 @@
           @keydown.enter.prevent="playNextVideo"
           @keydown.space.prevent="playNextVideo"
         />
+        <font-awesome-icon
+          v-if="isPlaylistFiltered"
+          class="playlistIcon"
+          :icon="['fas', 'xmark']"
+          :title="$t('Video.Remove Search result grouping')"
+          role="button"
+          tabindex="0"
+          @click="clearSearchGrouping"
+          @keydown.enter.prevent="clearSearchGrouping"
+          @keydown.space.prevent="clearSearchGrouping"
+        />
       </p>
       <div
         v-if="!isLoading"

@@ -39,6 +39,10 @@ const state = {
   // which depends on playlist data being ready
   playlistsReady: false,
   playlists: [],
+  searchFilteredVirtualPlaylist: {
+    playlistId: '',
+    videos: []
+  },
   defaultPlaylists: [
     {
       playlistName: 'Favorites',
@@ -62,6 +66,17 @@ const getters = {
   getAllPlaylists: (state) => state.playlists,
   getPlaylist: (state) => (playlistId) => {
     return state.playlists.find(playlist => playlist._id === playlistId)
+  },
+  getSearchFilteredVirtualPlaylistId: (state) => {
+    return state.searchFilteredVirtualPlaylist.playlistId
+  },
+  getSearchFilteredVirtualPlaylist: (state) => (playlistId) => {
+    if (state.searchFilteredVirtualPlaylist.playlistId !== playlistId) {
+      return null
+    }
+
+    const playlist = state.playlists.find(playlist => playlist._id === playlistId)
+    return { ...playlist, videos: state.searchFilteredVirtualPlaylist.videos }
   },
   getQuickBookmarkPlaylist(state, getters) {
     const playlistId = getters.getQuickBookmarkTargetPlaylistId
@@ -505,6 +520,18 @@ const mutations = {
   setPlaylistsReady(state, payload) {
     state.playlistsReady = payload
   },
+
+  setSearchFilteredVirtualPlaylist(state, payload) {
+    state.searchFilteredVirtualPlaylist.videos = payload.playlist
+    state.searchFilteredVirtualPlaylist.playlistId = payload.playlistId
+  },
+
+  clearSearchFilteredVirtualPlaylist(state) {
+    state.searchFilteredVirtualPlaylist = {
+      playlistId: '',
+      videos: []
+    }
+  }
 }
 
 export default {

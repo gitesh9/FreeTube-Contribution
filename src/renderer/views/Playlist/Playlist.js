@@ -47,7 +47,7 @@ export default defineComponent({
         title: this.playlistTitle,
         channelName: this.channelName,
         channelId: this.channelId,
-        items: this.sortedPlaylistItems,
+        items: this.visiblePlaylistItems,
         continuationData: this.continuationData,
       })
     }
@@ -280,6 +280,13 @@ export default defineComponent({
 
       // Re-fetch from local store when current user playlist videos updated
       this.getPlaylistInfoDebounce()
+    },
+    visiblePlaylistItems(items) {
+      if (this.processedVideoSearchQuery) {
+        this.$store.commit('setSearchFilteredVirtualPlaylist', { playlist: items, playlistId: this.playlistId })
+      } else {
+        this.$store.commit('clearSearchFilteredVirtualPlaylist')
+      }
     },
   },
   created: function () {

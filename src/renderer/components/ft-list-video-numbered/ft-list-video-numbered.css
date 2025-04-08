@@ -10,8 +10,17 @@
 .videoIndex {
   color: var(--tertiary-text-color);
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
 }
 
 .videoIndexIcon {
   font-size: 14px;
+}
+
+.index {
+  display: inline-block;
+  padding-inline-end: 3px;
 }
